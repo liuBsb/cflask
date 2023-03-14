@@ -1,0 +1,8 @@
+# Dependências de desenvolvimento
+autopep8
+iniconfig
+pycodestyle
+pytest
+pytest-flask
+typing_extensions
+

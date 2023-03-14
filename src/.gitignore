@@ -1,9 +1,9 @@
 # .gitignore
 
 # Ambiente virtual
-env/
+#env/
 
 # Arquivos de configuração
-Makefile
+#Makefile
 # Dependências de desenvolvimento
-requirements-dev.txt
+#requirements-dev.txt
