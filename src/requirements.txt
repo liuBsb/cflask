@@ -1,0 +1,5 @@
+# Dependências de produção
+Flask
+Flask-SQLAlchemy
+psycopg2-binary
+SQLAlchemy
