@@ -9,6 +9,11 @@ Para executar o script "cflask" é necessário ter o zsh instalado e configurado
 
 O script é chamado `cflask` e requer o nome da aplicação como argumento.
 
+## Como Instalar
+Para usar o script na linha de comando é preciso que os arquivos estejam na pasta de plugins custom do oh-my-zsh.
+[Veja como instalar clicando nesse link ](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).
+
+
 
 ## Como usar
 
