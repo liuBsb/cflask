@@ -1,7 +1,7 @@
 #!/bin/zsh
 cflask() {
   app_name=$1  # nome da aplicação
-  srcdir="$ZSH_SCRIPTS/${0%/*}/src/"
+  srcdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/src"
   if [ -d $srcdir ];then
     echo "Copiando Arquivos de $srcdir"
     cp -r "${srcdir}/"* .
