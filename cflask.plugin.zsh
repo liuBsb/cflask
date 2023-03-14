@@ -1,16 +1,16 @@
 #!/bin/zsh
 cflask() {
-  app_name=$1  # nome da aplicação
-  srcdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/src"
-  if [ -d $srcdir ];then
-    echo "Copiando Arquivos de $srcdir"
-    cp -r "${srcdir}/"* .
-    if      cp -r "${srcdir}/"* .; then
-      echo "copiados com sucesso..."
-    else echo "Erro ao copiar"
-       
-    fi
+  if [ $# -eq 0 ]; then
+    echo "Você deve fornecer um nome para o aplicativo.\n Ex: cflask <myapp>"
+    exit 1
+  fi
 
+# Use o argumento fornecido pelo usuário aqui
+
+  app_name=$1  # nome da aplicação
+  srcdir="$ZSH_CUSTOM/plugins/cflask/src"
+  if [ -d $srcdir ];then
+    cp -r "${srcdir}/"* .
   fi 
 
   # diretórios raiz da aplicação
