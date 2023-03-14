@@ -108,5 +108,10 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 EOF
+make venv
+if [ -d env ]; then
 
+  source env/bin/activate
+  make install 
+fi
 }
