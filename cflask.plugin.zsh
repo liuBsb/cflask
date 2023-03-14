@@ -71,4 +71,42 @@ EOF
 </body>
 </html>
 EOF
+
+touch "config.py"
+cat > "config.py" << EOF 
+DB_HOST = 'localhost'
+DB_PORT = '5432'
+DB_NAME = '${app_name}'
+DB_USER = '${app_name}_user'
+DB_PASSWORD = '${app_name}_pass'
+
+# Security configuration
+SECRET_KEY = '${app_name}_secret_key'
+DEBUG = True
+EOF
+
+touch "run.py"
+cat > "run.py" << EOF 
+from flask import Flask, render_template
+from ${app_name}.controllers.main_controller import main
+from ${app_name}.controllers.user_controller import user
+
+# Initialize the Flask application
+app = Flask(__name__)
+
+# Register the blueprints for the controllers
+app.register_blueprint(main)
+app.register_blueprint(user)
+
+# Define the home route
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Start the application
+if __name__ == '__main__':
+    app.run(debug=True)
+
+EOF
+
 }
