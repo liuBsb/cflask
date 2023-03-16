@@ -1,6 +1,6 @@
-# Script de Criação de Aplicação Flask MVC
+# Plugin para oh-my-zsh  
 
-O script "cflask" é um shell script escrito em zsh que tem como objetivo criar a estrutura básica de uma aplicação Flask no padrão mvc com alguns arquivos e diretórios pré-definidos.
+O plugin "cflask" é um shell script escrito em zsh que tem como objetivo criar a estrutura básica de uma aplicação Flask no padrão mvc com alguns arquivos e diretórios pré-definidos. Automatizando a etapa inicial para desenvolver sua aplicação.
 
 
 
@@ -17,11 +17,11 @@ Para usar o script na linha de comando é preciso que os arquivos estejam na pas
 
 ## Como usar
 
-Para usar o script "cflask", siga os passos abaixo:
+Para usar o plugin "cflask", siga os passos abaixo:
 
 1. Abra o terminal e navegue até o diretório onde deseja criar a aplicação Flask.
 2. Execute o comando `cflask <nome_da_aplicação>`, onde "nome_da_aplicação" é o nome que deseja dar à sua aplicação.
-3. Após a execução do script, a seguinte estrutura básica da sua aplicação Flask será criada no diretório atual.
+3. Após a execução do script, a seguinte estrutura básica da sua aplicação Flask será criada no diretório atual e iniciado o servidor de desenvolvimento que pode ser acessado em [localhost](http://127.0.0.1:5000).
 
 ```
 my_projeto/
@@ -38,14 +38,14 @@ my_projeto/
 │   │   ├── base.html
 │   │   ├── index.html
 │   │   ├── about.html
-│   └── app.py
+│   ├── app.py
+│   ├── config.py
 │   └── __init__.py
-├── config.py
 ├── .env
-└── requirements.txt
-└── requirements-dev.txt
-└── README.md
-└── .gitignore
+├── requirements.txt
+├── requirements-dev.txt
+├── README.md
+├── .gitignore
 └── Makefile
 ```
 
