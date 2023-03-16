@@ -41,6 +41,7 @@ my_projeto/
 │   └── app.py
 │   └── __init__.py
 ├── config.py
+├── .env
 └── requirements.txt
 └── requirements-dev.txt
 └── README.md

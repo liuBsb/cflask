@@ -103,10 +103,6 @@ class ProductionConfig(Config):
     'DATABASE_URL', 'sqlite:///my_database.db')
 
 
-class StagingConfig(Config):
-    DEVELOPMENT = True
-    DEBUG = True
-
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
@@ -119,7 +115,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     SECRET_KEY = secrets.token_hex(16)
-TESTING = True
+    TESTING = True
     SQLALCHEMY_DATABASE_URI = 'postgresql://usuario:senha@host:porta/${app_name}-test-db'
 EOF
 
@@ -145,6 +141,12 @@ if __name__ == '__main__':
 
 EOF
 make venv
+
+touch ".env"
+cat > ".env" << EOF 
+export FLASK_ENV=development
+export FLASK_APP=${app_name}.app:create_app	
+EOF
 if [ -d env ]; then
 
   source env/bin/activate
