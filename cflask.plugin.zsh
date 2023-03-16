@@ -26,26 +26,37 @@ cflask() {
   cat > "${app_name}/__init__.py" << EOF
 from flask import Flask
 
-app = Flask("${app_name}")
+def create_mini_app():
+    app = Flask(__name__)
+    return app
 
-from ${app_name}.controllers.main_controller import main_controller
-${app_name}.app.register_blueprint(main_controller)
+
+def create_app(objConfig):
+    app = create_mini_app()
+    app.config.from_object(objConfig)
+
+    return app
+
 EOF
 
   touch "${app_name}/controllers/main_controller.py"
   cat > "${app_name}/controllers/main_controller.py" << EOF
 from flask import Blueprint, render_template
 
-main_controller = Blueprint('main_controller', __name__)
+main_blueprint = Blueprint('main_controller', __name__)
 
-@main_controller.route('/')
+
+@main_blueprint.route('/')
 def index():
     return render_template('index.html')
 
-@main_controller.route('/about')
+
+@main_blueprint.route('/about')
 def about():
     return render_template('about.html')
 EOF
+  
+  touch "${app_name}/controllers/user_controller.py"
 
   touch "${app_name}/templates/index.html"
   cat > "${app_name}/templates/index.html" << EOF
@@ -74,34 +85,58 @@ EOF
 
 touch "config.py"
 cat > "config.py" << EOF 
-DB_HOST = 'localhost'
-DB_PORT = '5432'
-DB_NAME = '${app_name}'
-DB_USER = '${app_name}_user'
-DB_PASSWORD = '${app_name}_pass'
+import os
+import secrets
 
-# Security configuration
-SECRET_KEY = '${app_name}_secret_key'
-DEBUG = True
+
+class Config:
+    DEBUG = False
+    TESTING = False
+    CSRF_ENABLED = True
+    SECRET_KEY = secrets.token_hex(16)
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+class ProductionConfig(Config):
+    DEBUG = False
+    SECRET_KEY = secrets.token_hex(16)
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+    'DATABASE_URL', 'sqlite:///my_database.db')
+
+
+class StagingConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+    'DATABASE_URL', 'sqlite:///my_development.db')
+
+
+
+class TestingConfig(Config):
+    TESTING = True
+    SECRET_KEY = secrets.token_hex(16)
+TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://usuario:senha@host:porta/${app_name}-test-db'
 EOF
 
 touch "run.py"
 cat > "run.py" << EOF 
 from flask import Flask, render_template
-from ${app_name}.controllers.main_controller import main
-from ${app_name}.controllers.user_controller import user
+from pdfbooks import create_minimal_app
+from pdfbooks.controllers.main_controller import main_blueprint
+
 
 # Initialize the Flask application
-app = Flask(__name__)
+app = create_minimal_app()
 
 # Register the blueprints for the controllers
-app.register_blueprint(main)
-app.register_blueprint(user)
+app.register_blueprint(main_blueprint)
 
-# Define the home route
-@app.route('/')
-def home():
-    return render_template('index.html')
 
 # Start the application
 if __name__ == '__main__':
