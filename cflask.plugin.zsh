@@ -82,8 +82,8 @@ EOF
 </html>
 EOF
 
-touch "config.py"
-cat > "config.py" << EOF 
+touch "${app_name}/config.py"
+cat > "${app_name}/config.py" << EOF 
 import os
 import secrets
 
@@ -121,7 +121,6 @@ EOF
 
   touch "${app_name}/app.py"
 cat > "${app_name}/app.py" << EOF 
-from flask import Flask, render_template
 from . import create_app
 from .config import DevelopmentConfig
 
@@ -135,21 +134,20 @@ app = create_app(DevelopmentConfig)
 app.register_blueprint(main_blueprint)
 
 
-# Start the application
-if __name__ == '__main__':
-    app.run(debug=True)
-
 EOF
 make venv
 
 touch ".env"
 cat > ".env" << EOF 
-export FLASK_ENV=development
-export FLASK_APP=${app_name}.app:create_app	
+export FLASK_DEBUG=1
+export FLASK_APP=${app_name}/app.py	
 EOF
+
 if [ -d env ]; then
 
   source env/bin/activate
+  export $(cat .env | xargs)
   make install 
 fi
+
 }
