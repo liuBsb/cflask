@@ -37,11 +37,10 @@ my_projeto/
 │   ├── templates/
 │   │   ├── base.html
 │   │   ├── index.html
-│   │   ├── user_list.html
-│   │   └── user_detail.html
+│   │   ├── about.html
+│   └── app.py
 │   └── __init__.py
 ├── config.py
-├── run.py
 └── requirements.txt
 └── requirements-dev.txt
 └── README.md
