@@ -17,7 +17,6 @@ cflask() {
   mkdir -p "${app_name}"
   mkdir -p "${app_name}/controllers"
   mkdir -p "${app_name}/models"
-  mkdir -p "${app_name}/views"
   mkdir -p "${app_name}/static"
   mkdir -p "${app_name}/templates"
 
@@ -124,15 +123,17 @@ TESTING = True
     SQLALCHEMY_DATABASE_URI = 'postgresql://usuario:senha@host:porta/${app_name}-test-db'
 EOF
 
-touch "run.py"
-cat > "run.py" << EOF 
+  touch "${app_name}/app.py"
+cat > "${app_name}/app.py" << EOF 
 from flask import Flask, render_template
-from pdfbooks import create_minimal_app
-from pdfbooks.controllers.main_controller import main_blueprint
+from . import create_app
+from .config import DevelopmentConfig
+
+from .controllers.main_controller import main_blueprint
 
 
 # Initialize the Flask application
-app = create_minimal_app()
+app = create_app(DevelopmentConfig)
 
 # Register the blueprints for the controllers
 app.register_blueprint(main_blueprint)
